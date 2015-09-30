@@ -1354,6 +1354,12 @@ defmodule Ecto.Changeset do
     add_constraint(changeset, :foreign_key, to_string(constraint), field, message)
   end
 
+  def check_constraint(changeset, field, opts \\ []) do
+    constraint = opts[:name] || field
+    message    = opts[:message] || "check constraint violation"
+    add_constraint(changeset, :check, to_string(constraint), field, message)
+  end
+
   @doc """
   Checks the associated model exists.
 

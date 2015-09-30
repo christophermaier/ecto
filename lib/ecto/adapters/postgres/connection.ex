@@ -41,6 +41,8 @@ if Code.ensure_loaded?(Postgrex.Connection) do
       do: [unique: constraint]
     def to_constraints(%Postgrex.Error{postgres: %{code: :foreign_key_violation, constraint: constraint}}),
       do: [foreign_key: constraint]
+    def to_constraints(%Postgrex.Error{postgres: %{code: :check_violation, constraint: constraint}}),
+      do: [check: constraint]
 
     # Postgres 9.2 and earlier does not provide the constraint field
     def to_constraints(%Postgrex.Error{postgres: %{code: :unique_violation, message: message}}) do
